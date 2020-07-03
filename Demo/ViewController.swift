@@ -12,9 +12,27 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        getData()
+    }
+
+    fileprivate func getData() {
+        APIService.shared.fetchData { [weak self] (result) in
+            DispatchQueue.main.async {
+                self?.handleAuthenticationResult(result)
+            }
+        }
+    }
+
+    fileprivate func handleAuthenticationResult(_ result: TrialTaskAPIServiceResult<DataResponse>) {
+        switch result {
+        case .success(let data):
+            print("successful fetch")
+            break
+        case .failure(let error):
+            print("\(error.localizedDescription)")
+            break
+        }
     }
 
 
 }
-
