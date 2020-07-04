@@ -92,6 +92,11 @@ public class Networking<T: Codable>: NSObject {
         }
         do {
             let object = try decoder.decode(T.self, from: data)
+            do {
+                try UserDefaultHelper.setObject(object, forKey: "MyData")
+            } catch {
+                print(error.localizedDescription)
+            }
             return .success(object)
         } catch let error {
             return .failure(.jsonParsing(error.localizedDescription))
@@ -156,5 +161,4 @@ public class Networking<T: Codable>: NSObject {
             completion(.success(request))
         }
     }
-    
 }

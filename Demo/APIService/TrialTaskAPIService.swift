@@ -28,14 +28,14 @@ public struct TrialTaskAPIService {
         self.baseUrl = baseUrl
     }
 
-    func fetchData(completion: @escaping (_: TrialTaskAPIServiceResult<DataResponse>) -> Void) {
+    func fetchData(completion: @escaping (_: TrialTaskAPIServiceResult<Bool>) -> Void) {
         let endpoint = Endpoint.fetchData(baseUrl: baseUrl)
         let request = endpoint.createRequest()
         let networking = Networking<DataResponse>()
         networking.sendRequest(request) { (result) in
             switch result {
-            case .success(let response):
-                completion(.success(response))
+            case .success(_ ):
+                completion(.success(true))
                 break
             case .failure(let error):
                 completion(.failure(.network(error)))
